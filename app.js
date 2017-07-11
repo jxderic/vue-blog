@@ -28,7 +28,7 @@ app.get('/admin', function(req, res) {
     var isLogined = req.session.userName;
     if(isLogined){
         console.log('已登录')
-        var html = fs.readFileSync(resolve('../admin/admin.html'), 'utf-8');
+        var html = fs.readFileSync(resolve('../admin/index.html'), 'utf-8');
     }else{
         console.log('未登录')
         var html = fs.readFileSync(resolve('../admin/login.html'), 'utf-8');
