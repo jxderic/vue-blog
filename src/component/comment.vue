@@ -32,11 +32,11 @@ export default {
                 }
                 var gitment = new Gitment({
                     id: binding.value,
-                    owner: 'linguowei',
-                    repo: 'blog-comment',
+                    owner: 'jxderic',
+                    repo: 'vue-blog',
                     oauth: {
-                        client_id: 'd7c66377574e5e6acfe5',
-                        client_secret: '7c52883d0368ee18a496491b9695d506f6890ccf',
+                        client_id: '5d814bb124c004d61fa0',
+                        client_secret: 'e9126f74f8b22f9e0ce86bf1816dc2c5b526bbb8',
                     },
                     theme: myTheme
                 })
