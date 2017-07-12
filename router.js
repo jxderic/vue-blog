@@ -27,6 +27,33 @@ router.post('/api/login', function(req,res){
     }
 })
 
+// 查询文章列表路由 用于博客前端展示数据不包含草稿内容
+router.get('/api/articleList', function(req, res){
+    db.Article.find({state: "publish"}, function(err, docs){
+        if (err) {
+            console.log('出错'+ err);
+            return
+        }
+        res.json(docs)
+    })
+})
+// 按标签ID查询文章列表路由 用于博客前端展示数据不包含草稿内容
+router.post('/api/articleList', function(req, res){
+    db.TagList.find({_id: req.body.tagId}, function(err, docs){
+        if (err) {
+            res.status(500).send();
+            return
+        }
+        db.Article.find({label: docs[0].tagName,state: "publish"}, function(err, docs){
+            if (err) {
+                res.status(500).send();
+                return
+            }
+            res.json(docs)
+        })
+    })
+})
+
 //查询文章列表路由，用于博客后端管理系统，包含草稿和已发布文章数据
 router.get('/api/admin/articleList', function(req,res){
     db.Article.find({}, function(err, docs){
