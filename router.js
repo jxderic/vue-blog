@@ -103,6 +103,27 @@ router.get('/api/getArticleLabel', function(req, res){
     })
 })
 
+//更新文章标签路由
+router.post('/api/updateLabel', function(req,res){
+    db.TagList.find({tagName:req.body.label}, function(err,docs){
+        if(err){
+            return
+        }
+        if(req.body.change == 'del'){
+            docs[0].tagNumber--;
+        }
+        if(req.body.change == 'inc'){
+            docs[0].tagNumber++;
+        }
+        db.TagList(docs[0]).save(function(err){
+            if (err){
+                res.status(500).send();
+                return
+            }
+            res.send()
+        })
+    })
+})
 //文章标签保存路由
 router.post('/api/saveArticleLabel', function(req,res){
     db.TagList.find({}, function(err,docs){
