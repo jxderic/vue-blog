@@ -41,7 +41,8 @@
                 articleTitle: '请输入文章标题',
                 content: '',
                 tags: [],
-                list: []
+                list: [],
+                state: ''
             }
         },
         mounted: function(){
@@ -97,6 +98,7 @@
                     id: this.$route.query.id
                 }).then(
                     response => {
+                        this.state = response.data.state,
                         this.articleTitle = response.data.title,
                         this.list.push({
                             tagName: response.data.label
@@ -134,12 +136,23 @@
                     response => {
                         this.$message('删除成功'),// elementUI的Message 消息提示
                         this.$emit('saveArticleInformation'),// 传递事件给articleList 刷新列表页
-                        this.$router.push('/articleList/articleEdit')//重新回到articleEdit页面
+                        this.$router.push('/articleList/articleEdit')//重新回到articleEdit页面 刷新一下
+                        if(this.state == 'publish'){
+                            if(this.list[0].tagName !== '未分类'){
+                                this.$http.post('/api/updateLabel',{
+                                    label: this.list[0].tagName,
+                                    change: 'del'
+                                }).then(
+                                    response => console.log(response)
+                                )
+                            } 
+                        }
                     },
                     response => {
                         this.$message.error('删除失败请重试')
                     }
                 )
+
             },
             //保存草稿
             saveDraft: function(){

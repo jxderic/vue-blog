@@ -32,17 +32,17 @@
         mounted: function(){
             // 请求标签数据列表
             this.$http.get('/api/getArticleLabel').then(
-                respone => {
-                    this.articleLabel =  respone.data
+                res => {
+                    this.articleLabel =  res.data
                 },
-                respone => {
+                res => {
                     Message.error('请求数据出错，请重新刷新页面')
                 }
             )
         },
         methods: {
             labelClassification: function(title){
-                localStorage.setItem("labelTitle",title);
+                localStorage.setItem("labelTitle",title);   // 通过localStorage传递
                 this.$router.push('/articleList')
             },
             addArticLabel: function(){
